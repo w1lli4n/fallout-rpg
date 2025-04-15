@@ -1,0 +1,82 @@
+@import "./static/css/fallout.css";
+
+.form-group {
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.form-input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.form-input-group label {
+    padding: 0.2rem;
+    min-width: 96px;
+    text-transform: capitalize;
+}
+
+.form-input-group input,
+select {
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 0.5rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.form-group-input-chuck {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    gap: 0.5rem;
+}
+
+.bg-black {
+    background-color: #222;
+}
+
+.title-container {
+    margin: 0 auto 48px auto;
+    width: 90%;
+    font-size: x-large;
+}
+
+.footer {
+    margin: 128px 0 0;
+    padding: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: small;
+}
+
+.connect {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+
+    margin: 0 auto;
+
+    width: 256px;
+    height: 100vh;
+}
+
+.connect a,
+button {
+    width: 100%;
+}

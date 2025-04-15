@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Fallout RPG: Personagem</title>
+        <link rel="icon" href="../images/fallout-boy.png" />
+        <link rel="stylesheet" href="../../styles.css" />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+    </head>
+    <body class="bg-terminal bg-black">
+        <script>
+            document.addEventListener("alpine:init", () => {
+                // tabs
+                Alpine.store("tabs", {
+                    activeTab: "info",
+                    sections: ["info", "stats", "itens", "perks"],
+                });
+
+                // sheet
+                Alpine.store("sheet", {
+                    info: {
+                        name: { id: "name", type: "text", text: "nome" },
+                        age: { id: "age", type: "number", text: "idade" },
+                        origin: { id: "origin", type: "text", text: "origem" },
+                        level: { id: "level", type: "number", text: "nivel" },
+                        vats: { id: "vats", type: "number", text: "VATS" },
+                    },
+                    stats: {
+                        strength: {
+                            id: "strength",
+                            type: "number",
+                            text: "força",
+                        },
+                        agility: {
+                            id: "agility",
+                            type: "number",
+                            text: "agilida.",
+                        },
+                        endurance: {
+                            id: "endurance",
+                            type: "number",
+                            text: "resist.",
+                        },
+                        intelligence: {
+                            id: "intelligence",
+                            type: "number",
+                            text: "intelig.",
+                        },
+                        perception: {
+                            id: "perception",
+                            type: "number",
+                            text: "percepc.",
+                        },
+                        charisma: {
+                            id: "charisma",
+                            type: "number",
+                            text: "carisma",
+                        },
+                        luck: { id: "luck", type: "number", text: "sorte" },
+                    },
+                    items: {
+                        items: [],
+                        equipment: {
+                            head: null,
+                            body: null,
+                            upperBody: null,
+                            feet: null,
+                            primaryWeapon: null,
+                            secondaryWeapon: null,
+                            firstAmmo: null,
+                            secondAmmo: null,
+                            firstUtility: null,
+                            secondUtility: null,
+                        },
+                    },
+                    perks: {
+                        perks: [],
+                    },
+                });
+            });
+        </script>
+        <header>
+            <h1
+                class="text-2xl font-bold fg-pb fo-amber fo-glow title-container"
+            >
+                Fallout RPG: Ficha de Personagem
+            </h1>
+            <div role="tablist" class="fo-tabs fo-glow" x-data>
+                <template x-for="section in $store.tabs.sections">
+                    <a
+                        role="tab"
+                        class="fo-tab"
+                        :class="{ 'fo-tab-active': $store.tabs.activeTab === section }"
+                        x-text="section"
+                        @click="$store.tabs.activeTab = section"
+                    ></a>
+                </template>
+            </div>
+        </header>
+        <main x-data>
+            <!-- info section -->
+            <section
+                x-show="$store.tabs.activeTab === 'info'"
+                class="form-group"
+            >
+                <div class="form-input-group">
+                    <div class="form-input-group">
+                        <template x-for="i in $store.sheet.info">
+                            <div
+                                class="form-group-input-chuck text-lg fo-terminal bg-pb fg-pb fo-glow p-1"
+                            >
+                                <label
+                                    :for="'input-' + i.id"
+                                    x-text="i.text"
+                                ></label>
+                                <input
+                                    :type="i.type"
+                                    :id="'input-' + i.id"
+                                    class="fo-input"
+                                />
+                            </div>
+                        </template>
+                        <div
+                            class="form-group-input-chuck text-lg fo-terminal bg-pb fg-pb fo-glow p-1"
+                        >
+                            <label for="input-gender ">Sexo</label>
+                            <select id="input-gender" class="fo-select">
+                                <option value="male">Masculino</option>
+                                <option value="female">Feminino</option>
+                                <option value="other">Outro</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- stats section -->
+            <section
+                x-show="$store.tabs.activeTab === 'stats'"
+                class="form-group"
+            >
+                <div class="form-input-group">
+                    <div class="form-input-group">
+                        <template x-for="i in $store.sheet.stats">
+                            <div
+                                class="form-group-input-chuck text-lg fo-terminal bg-pb fg-pb fo-glow p-1"
+                            >
+                                <label
+                                    :for="'input-' + i.id"
+                                    x-text="i.text"
+                                ></label>
+                                <input
+                                    :type="i.type"
+                                    :id="'input-' + i.id"
+                                    class="fo-input"
+                                />
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <!-- itens section -->
+            <section
+                x-show="$store.tabs.activeTab === 'itens'"
+                class="form-group"
+            ></section>
+
+            <!-- perks section -->
+            <section
+                x-show="$store.tabs.activeTab === 'perks'"
+                class="form-group"
+            ></section>
+        </main>
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="font-bold fg-pb fo-amber fo-glow">
+                    &copy; GPL3 2025 Willian dos Santos Almeida Alves
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>
