@@ -23,44 +23,80 @@
                 // sheet
                 Alpine.store("sheet", {
                     info: {
-                        name: { id: "name", type: "text", text: "nome" },
-                        age: { id: "age", type: "number", text: "idade" },
-                        origin: { id: "origin", type: "text", text: "origem" },
-                        level: { id: "level", type: "number", text: "nivel" },
-                        vats: { id: "vats", type: "number", text: "VATS" },
+                        name: {
+                            id: "name",
+                            type: "text",
+                            text: "nome",
+                            value: "",
+                        },
+                        age: {
+                            id: "age",
+                            type: "number",
+                            text: "idade",
+                            value: "",
+                        },
+                        origin: {
+                            id: "origin",
+                            type: "text",
+                            text: "origem",
+                            value: "",
+                        },
+                        level: {
+                            id: "level",
+                            type: "number",
+                            text: "nivel",
+                            value: "",
+                        },
+                        vats: {
+                            id: "vats",
+                            type: "number",
+                            text: "VATS",
+                            value: "",
+                        },
                     },
                     stats: {
                         strength: {
                             id: "strength",
                             type: "number",
                             text: "força",
+                            value: "",
                         },
                         agility: {
                             id: "agility",
                             type: "number",
                             text: "agilida.",
+                            value: "",
                         },
                         endurance: {
                             id: "endurance",
                             type: "number",
                             text: "resist.",
+                            value: "",
                         },
                         intelligence: {
                             id: "intelligence",
                             type: "number",
                             text: "intelig.",
+                            value: "",
                         },
                         perception: {
                             id: "perception",
                             type: "number",
                             text: "percepc.",
+                            value: "",
                         },
                         charisma: {
                             id: "charisma",
                             type: "number",
                             text: "carisma",
+                            value: "",
                         },
-                        luck: { id: "luck", type: "number", text: "sorte" },
+                        luck: {
+                            id: "luck",
+                            type: "number",
+                            text: "sorte",
+                            value: "",
+                        },
                     },
                     items: {
                         items: [],
@@ -108,32 +144,31 @@
                 class="form-group"
             >
                 <div class="form-input-group">
-                    <div class="form-input-group">
-                        <template x-for="i in $store.sheet.info">
-                            <div
-                                class="form-group-input-chuck text-lg fo-terminal bg-pb fg-pb fo-glow p-1"
-                            >
-                                <label
-                                    :for="'input-' + i.id"
-                                    x-text="i.text"
-                                ></label>
-                                <input
-                                    :type="i.type"
-                                    :id="'input-' + i.id"
-                                    class="fo-input"
-                                />
-                            </div>
-                        </template>
+                    <template x-for="i in $store.sheet.info">
                         <div
                             class="form-group-input-chuck text-lg fo-terminal bg-pb fg-pb fo-glow p-1"
                         >
-                            <label for="input-gender ">Sexo</label>
-                            <select id="input-gender" class="fo-select">
-                                <option value="male">Masculino</option>
-                                <option value="female">Feminino</option>
-                                <option value="other">Outro</option>
-                            </select>
+                            <label
+                                :for="'input-' + i.id"
+                                x-text="i.text"
+                            ></label>
+                            <input
+                                :type="i.type"
+                                :id="'input-' + i.id"
+                                class="fo-input"
+                                x-model="$store.sheet.info[i.id].value"
+                            />
                         </div>
+                    </template>
+                    <div
+                        class="form-group-input-chuck text-lg fo-terminal bg-pb fg-pb fo-glow p-1"
+                    >
+                        <label for="input-gender ">Sexo</label>
+                        <select id="input-gender" class="fo-select">
+                            <option value="male">Masculino</option>
+                            <option value="female">Feminino</option>
+                            <option value="other">Outro</option>
+                        </select>
                     </div>
                 </div>
             </section>
@@ -157,6 +192,7 @@
                                     :type="i.type"
                                     :id="'input-' + i.id"
                                     class="fo-input"
+                                    x-model="$store.sheet.stats[i.id].value"
                                 />
                             </div>
                         </template>

@@ -12,10 +12,87 @@
         ></script>
     </head>
     <body class="bg-terminal bg-black">
-        <div class="connect">
-            <a href="static/html/personagem.html"
-                ><button class="fo-btn fo-shadow">Conectar Pip Boy</button></a
+        <div class="connect" x-data="loginComponent()">
+            <button
+                class="fo-btn fo-shadow"
+                @click="open = !open"
+                x-show="!open"
             >
+                Conectar Pip Boy
+            </button>
+
+            <div x-show="open" x-transition>
+                <label for="input-user">Usuário</label>
+                <input
+                    type="text"
+                    id="input-user"
+                    placeholder="Usuário"
+                    x-model="user"
+                    autocomplete="username"
+                />
+                <label for="input-password">Senha</label>
+                <input
+                    type="password"
+                    id="input-password"
+                    placeholder="Senha"
+                    x-model="pass"
+                    autocomplete="current-password"
+                />
+                <button class="fo-btn fo-shadow" @click="login">LOGIN</button>
+
+                <template x-if="error">
+                    <p class="text-red-500 mt-2">⚠️ error</p>
+                </template>
+            </div>
         </div>
+
+        <script>
+            function loginComponent() {
+                return {
+                    open: false,
+                    user: "",
+                    pass: "",
+                    error: "",
+
+                    async login() {
+                        if (!this.user || !this.pass) {
+                            this.error = "Preencha usuário e senha";
+                            return;
+                        }
+
+                        try {
+                            const url =
+                                "https://pmpfrtjine.execute-api.sa-east-1.amazonaws.com/auth_request_handler"; // define a URL aqui
+                            const body = {
+                                username: this.user,
+                                password: this.pass,
+                            };
+
+                            const response = await fetch(url, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(body),
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`Status: ${response.status}`);
+                            }
+
+                            const json = await response.json();
+
+                            localStorage.setItem(
+                                "jwt-token",
+                                json.success.AccessToken,
+                            );
+                            window.location = "./static/html/personagem.html";
+                        } catch (e) {
+                            console.error(e);
+                            this.error =
+                                "Falha no login. Verifique suas credenciais.";
+                        }
+                    },
+                };
+            }
+        </script>
     </body>
 </html>
