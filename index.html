@@ -13,6 +13,11 @@
     </head>
     <body class="bg-terminal bg-black">
         <div class="connect" x-data="loginComponent()">
+            <h1
+                class="text-2xl font-bold fg-pb fo-amber fo-glow title-container"
+            >
+                Fallout RPG
+            </h1>
             <button
                 class="fo-btn fo-shadow"
                 @click="open = !open"
@@ -21,28 +26,101 @@
                 Conectar Pip Boy
             </button>
 
-            <div x-show="open" x-transition>
-                <label for="input-user">Usuário</label>
-                <input
-                    type="text"
-                    id="input-user"
-                    placeholder="Usuário"
-                    x-model="user"
-                    autocomplete="username"
-                />
-                <label for="input-password">Senha</label>
-                <input
-                    type="password"
-                    id="input-password"
-                    placeholder="Senha"
-                    x-model="pass"
-                    autocomplete="current-password"
-                />
-                <button class="fo-btn fo-shadow" @click="login">LOGIN</button>
-
-                <template x-if="error">
-                    <p class="text-red-500 mt-2">⚠️ error</p>
-                </template>
+            <div
+                x-show="open"
+                x-transition.opacity.duration.300ms
+                class="form-input-group"
+            >
+                <div
+                    class="form-group-input-chuck text-lg fo-terminal bg-pb fg-pb fo-glow p-1"
+                >
+                    <label for="input-user">Usuário</label>
+                    <input
+                        type="text"
+                        id="input-user"
+                        placeholder="Usuário"
+                        x-model="user"
+                        autocomplete="username"
+                        class="fo-input"
+                    />
+                </div>
+                <div
+                    x-show="model == 'signup'"
+                    class="form-group-input-chuck text-lg fo-terminal bg-pb fg-pb fo-glow p-1"
+                >
+                    <label for="input-email">Email</label>
+                    <input
+                        type="email"
+                        id="input-email"
+                        placeholder="Email"
+                        x-model="email"
+                        autocomplete="email"
+                        class="fo-input"
+                    />
+                </div>
+                <div
+                    x-show="model == 'signup'"
+                    class="form-group-input-chuck text-lg fo-terminal bg-pb fg-pb fo-glow p-1"
+                >
+                    <label for="input-name">Nome</label>
+                    <input
+                        type="text"
+                        id="input-name"
+                        placeholder="Nome"
+                        x-model="name"
+                        autocomplete="name"
+                        class="fo-input"
+                    />
+                </div>
+                <div
+                    class="form-group-input-chuck text-lg fo-terminal bg-pb fg-pb fo-glow p-1"
+                >
+                    <label for="input-password">Senha</label>
+                    <input
+                        type="password"
+                        id="input-password"
+                        placeholder="Senha"
+                        x-model="pass"
+                        autocomplete="current-password"
+                        class="fo-input"
+                    />
+                </div>
+                <button
+                    x-show="model == 'login'"
+                    class="fo-btn fo-shadow"
+                    @click="login"
+                >
+                    ENTRAR
+                </button>
+                <button
+                    x-show="model == 'signup'"
+                    class="fo-btn fo-shadow"
+                    @click="signup"
+                >
+                    CADASTRAR
+                </button>
+                <div
+                    x-show="error"
+                    class="text-lg fo-terminal bg-pb fg-pb fo-amber fo-glow p-1"
+                >
+                    <p class="login-error">
+                        ⚠️ error: <span x-text="error"></span>
+                    </p>
+                </div>
+                <p
+                    x-show="model == 'login'"
+                    @click="model = 'signup'"
+                    class="text-lg fo-terminal fg-pb self-center fo-glow fo-link"
+                >
+                    Sem conta? Cadastre-se
+                </p>
+                <p
+                    x-show="model == 'signup'"
+                    @click="model = 'login'"
+                    class="text-lg fo-terminal fg-pb self-center fo-glow fo-link"
+                >
+                    Tem uma conta? Entre
+                </p>
             </div>
         </div>
 
@@ -50,9 +128,12 @@
             function loginComponent() {
                 return {
                     open: false,
+                    model: "login",
+                    error: "",
                     user: "",
                     pass: "",
-                    error: "",
+                    email: "",
+                    givenName: "",
 
                     async login() {
                         if (!this.user || !this.pass) {
@@ -88,7 +169,48 @@
                         } catch (e) {
                             console.error(e);
                             this.error =
-                                "Falha no login. Verifique suas credenciais.";
+                                "Falha ao entrar. Verifique suas credenciais.";
+                        }
+                    },
+                    async signup() {
+                        if (
+                            !this.user ||
+                            !this.pass ||
+                            !this.email ||
+                            !this.givenName
+                        ) {
+                            this.error = "Preencha todos os campos";
+                            return;
+                        }
+
+                        try {
+                            const url =
+                                "https://pmpfrtjine.execute-api.sa-east-1.amazonaws.com/register_request_handler";
+                            const body = {
+                                username: this.user,
+                                password: this.pass,
+                                email: this.email,
+                                givenName: this.givenName,
+                            };
+
+                            const response = await fetch(url, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(body),
+                            });
+
+                            if (!response.ok) {
+                                throw new Error(`Status: ${response.status}`);
+                            }
+
+                            const json = await response.json();
+
+                            window.alert("Usuário cadastrado com sucesso!");
+                            location.reload();
+                        } catch (e) {
+                            console.error(e);
+                            this.error =
+                                "Falha no cadastro. Verifique os dados preenchidos.";
                         }
                     },
                 };

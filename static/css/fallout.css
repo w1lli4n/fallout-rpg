@@ -217,24 +217,23 @@
     background-color: rgb(var(--fo-fg));
 }
 
-.fo-input[type="text"],
-textarea.fo-input {
+.fo-input,
+textarea.fo-input,
+password.fo-input,
+number.fo-input,
+email.fo-input {
     background-color: rgb(var(--fo-bg));
     color: rgb(var(--fo-fg));
     padding: 0 0.25rem;
     outline: none;
 }
 
-.fo-input[type="text"]::placeholder,
-textarea.fo-input::placeholder {
+.fo-input::placeholder,
+textarea.fo-input::placeholder,
+password.fo-input::placeholder,
+number.fo-input::placeholder,
+email.fo-input::placeholder {
     color: rgb(var(--fo-fg), 0.625);
-}
-
-.fo-input[type="number"] {
-    background-color: rgb(var(--fo-bg));
-    color: rgb(var(--fo-fg));
-    padding: 0 0.25rem;
-    outline: none;
 }
 
 .fo-select {

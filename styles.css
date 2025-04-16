@@ -51,6 +51,7 @@ input[type="number"] {
     margin: 0 auto 48px auto;
     width: 90%;
     font-size: x-large;
+    text-align: center;
 }
 
 .footer {
@@ -66,17 +67,27 @@ input[type="number"] {
 
 .connect {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
 
     margin: 0 auto;
 
     width: 256px;
-    height: 100vh;
+    height: 100dvh;
 }
 
 .connect a,
 button {
     width: 100%;
+}
+
+.connect p {
+    cursor: pointer;
+}
+
+.login-error {
+    padding: 0.5rem;
+    text-align: center;
 }
